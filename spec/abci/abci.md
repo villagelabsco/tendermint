@@ -358,6 +358,7 @@ the blockchain's `AppHash` which is verified via [light client verification](../
     | path   | string | Path field of the request URI. Can be used with or in lieu of `data`. Apps MUST interpret `/store` as a query by key on the underlying store. The key SHOULD be specified in the `data` field. Apps SHOULD allow queries over specific types like `/accounts/...` or `/votes/...` | 2            |
     | height | int64  | The block height for which you want the query (default=0 returns data for the latest committed block). Note that this is the height of the block containing the application's Merkle root hash, which represents the state as it was after committing the block at Height-1            | 3            |
     | prove  | bool   | Return Merkle proof with response if possible                                                                                                                                                                                                                                          | 4            |
+    | permit  | string   | Provide an authorization (message signed by an account, the address which signed the message is extracted to match with RBAC policies)                                                                                                                                                                                                                                          | 5            |
 
 * **Response**:
 

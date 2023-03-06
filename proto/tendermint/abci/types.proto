@@ -72,6 +72,7 @@ message RequestQuery {
   string path   = 2;
   int64  height = 3;
   bool   prove  = 4;
+  string permit = 5;
 }
 
 message RequestBeginBlock {

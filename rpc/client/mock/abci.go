@@ -42,6 +42,7 @@ func (a ABCIApp) ABCIQueryWithOptions(
 		Path:   path,
 		Height: opts.Height,
 		Prove:  opts.Prove,
+		Permit: opts.Permit,
 	})
 	return &ctypes.ResultABCIQuery{Response: q}, nil
 }
@@ -117,7 +118,7 @@ func (m ABCIMock) ABCIQueryWithOptions(
 	path string,
 	data bytes.HexBytes,
 	opts client.ABCIQueryOptions) (*ctypes.ResultABCIQuery, error) {
-	res, err := m.Query.GetResponse(QueryArgs{path, data, opts.Height, opts.Prove})
+	res, err := m.Query.GetResponse(QueryArgs{path, data, opts.Height, opts.Prove, opts.Permit})
 	if err != nil {
 		return nil, err
 	}
@@ -168,6 +169,7 @@ type QueryArgs struct {
 	Data   bytes.HexBytes
 	Height int64
 	Prove  bool
+	Permit string
 }
 
 func (r *ABCIRecorder) addCall(call Call) {
@@ -200,7 +202,7 @@ func (r *ABCIRecorder) ABCIQueryWithOptions(
 	res, err := r.Client.ABCIQueryWithOptions(ctx, path, data, opts)
 	r.addCall(Call{
 		Name:     "abci_query",
-		Args:     QueryArgs{path, data, opts.Height, opts.Prove},
+		Args:     QueryArgs{path, data, opts.Height, opts.Prove, opts.Permit},
 		Response: res,
 		Error:    err,
 	})

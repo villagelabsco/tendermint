@@ -5,7 +5,8 @@ package client
 type ABCIQueryOptions struct {
 	Height int64
 	Prove  bool
+	Permit string
 }
 
 // DefaultABCIQueryOptions are latest height (0) and prove false.
-var DefaultABCIQueryOptions = ABCIQueryOptions{Height: 0, Prove: false}
+var DefaultABCIQueryOptions = ABCIQueryOptions{Height: 0, Prove: false, Permit: ""}

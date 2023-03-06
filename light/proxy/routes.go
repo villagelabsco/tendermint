@@ -44,7 +44,7 @@ func RPCRoutes(c *lrpc.Client) map[string]*rpcserver.RPCFunc {
 		"broadcast_tx_async":  rpcserver.NewRPCFunc(makeBroadcastTxAsyncFunc(c), "tx"),
 
 		// abci API
-		"abci_query": rpcserver.NewRPCFunc(makeABCIQueryFunc(c), "path,data,height,prove"),
+		"abci_query": rpcserver.NewRPCFunc(makeABCIQueryFunc(c), "path,data,height,prove,permit"),
 		"abci_info":  rpcserver.NewRPCFunc(makeABCIInfoFunc(c), "", rpcserver.Cacheable()),
 
 		// evidence API
@@ -255,15 +255,16 @@ func makeBroadcastTxAsyncFunc(c *lrpc.Client) rpcBroadcastTxAsyncFunc {
 }
 
 type rpcABCIQueryFunc func(ctx *rpctypes.Context, path string,
-	data bytes.HexBytes, height int64, prove bool) (*ctypes.ResultABCIQuery, error)
+	data bytes.HexBytes, height int64, prove bool, permit string) (*ctypes.ResultABCIQuery, error)
 
 func makeABCIQueryFunc(c *lrpc.Client) rpcABCIQueryFunc {
 	return func(ctx *rpctypes.Context, path string, data bytes.HexBytes,
-		height int64, prove bool,
+		height int64, prove bool, permit string,
 	) (*ctypes.ResultABCIQuery, error) {
 		return c.ABCIQueryWithOptions(ctx.Context(), path, data, rpcclient.ABCIQueryOptions{
 			Height: height,
 			Prove:  prove,
+			Permit: permit,
 		})
 	}
 }
