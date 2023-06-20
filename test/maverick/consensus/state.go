@@ -900,9 +900,10 @@ func (cs *State) updateToState(state sm.State) {
 		// to be gathered for the first block.
 		// And alternative solution that relies on clocks:
 		// cs.StartTime = state.LastBlockTime.Add(timeoutCommit)
-		cs.StartTime = cs.config.Commit(tmtime.Now())
+		// -- Village update: as we want variable block times, the app is able to specify the target block time
+		cs.StartTime = state.LastBlockTime
 	} else {
-		cs.StartTime = cs.config.Commit(cs.CommitTime)
+		cs.StartTime = cs.config.NextStartTime(cs.StartTime)
 	}
 
 	cs.Validators = validators

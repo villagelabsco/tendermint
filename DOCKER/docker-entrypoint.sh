@@ -9,7 +9,8 @@ if [ ! -d "$TMHOME/config" ]; then
 		-e "s/^proxy_app\s*=.*/proxy_app = \"$PROXY_APP\"/" \
 		-e "s/^moniker\s*=.*/moniker = \"$MONIKER\"/" \
 		-e 's/^addr_book_strict\s*=.*/addr_book_strict = false/' \
-		-e 's/^timeout_commit\s*=.*/timeout_commit = "500ms"/' \
+		-e 's/^target_height_duration\s*=.*/target_height_duration = "800ms"/' \
+		-e 's/^post_target_buffer_duration\s*=.*/post_target_buffer_duration = "300ms"/' \
 		-e 's/^index_all_tags\s*=.*/index_all_tags = true/' \
 		-e 's,^laddr = "tcp://127.0.0.1:26657",laddr = "tcp://0.0.0.0:26657",' \
 		-e 's/^prometheus\s*=.*/prometheus = true/' \
